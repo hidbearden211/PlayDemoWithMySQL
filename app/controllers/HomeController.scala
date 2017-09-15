@@ -3,6 +3,7 @@ package controllers
 import javax.inject._
 
 import model.User
+import play.api.Configuration
 import play.api.mvc._
 import services.UserService
 
@@ -11,7 +12,7 @@ import services.UserService
   * application's home page.
   */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents, userService: UserService) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, userService: UserService, config: Configuration) extends AbstractController(cc) {
 
   /**
     * Create an Action to render an HTML page with a welcome message.
@@ -25,7 +26,7 @@ class HomeController @Inject()(cc: ControllerComponents, userService: UserServic
 
   def my = Action {
     userService.addUser(new User(1,"pavel","slhlshfsl","sklflksf",78247247))
-    Ok(views.html.html("first message"))
+    Ok(views.html.html(config.get[String]("custom.documents.path")))
   }
 
 }
